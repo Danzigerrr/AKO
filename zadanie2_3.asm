@@ -7,14 +7,29 @@ extern _MessageBoxW@16 : PROC
 public _main 
 .data 
 tytul	dw 'T','e','k','s','t',' ','w',' ' 
-				dw 'f','o','r','m','a','c','i','e',' ' 
-				dw 'U','T','F','-','1','6', 0 
+		dw 'f','o','r','m','a','c','i','e',' ' 
+		dw 'U','T','F','-','1','6', 0 
 
-tekst	dw 'p','i','e','s',':'
-		dw 0d83dh, 0dc15h
-		dw ' ', 'i','k','o','t',':'
+tekst	dw 'c','o','w',':'
+		dw 0D83DH, 0DC04H 
+		dw ' ','c','a','t',':'
 		dw 0d83dh, 0dc08h
 		dw 0
+
+COMMENT	|
+
+conversion from Unicode to utf-16:
+
+1. take sing from unicode: https://graphemica.com/characters/tags/animal for example U+1F404
+2. do math: 1F404 - 10000 = 0F404
+3. 0F404 = 0000 1111 01 00 0000 0100
+4. place the proper beginnings offset utf 16 number at the front offset each 10 bits:
+	1101 1000 0011 1101   1101 1100 0000 0100
+	  D   8     3    D     D     C    0   4
+
+	0D83DH, 0DC04H   --> cow emoji
+
+|
 
 
 .code 
