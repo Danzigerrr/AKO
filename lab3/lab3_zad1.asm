@@ -1,8 +1,8 @@
 .686
 .model flat
 extern _ExitProcess@4 : PROC
-extern __write : PROC ; (dwa znaki podkre渓enia)
-extern __read : PROC ; (dwa znaki podkre渓enia)
+extern __write : PROC ; (dwa znaki podkre艣lenia)
+extern __read : PROC ; (dwa znaki podkre艣lenia)
 ;https://www.quora.com/Is-there-a-name-for-this-mathematical-sequence-1-2-4-7-11-16-22-29-37-46-56
 public _main
 .data
@@ -18,12 +18,12 @@ wyswietl_eax proc
 	mov byte PTR znaki [0], 0AH ; kod nowego wiersza
 	mov byte PTR znaki [11], 0AH ; kod nowego wiersza
 
-	; wy渨ietlenie cyfr na ekranie
-	push dword PTR 12 ; liczba wy渨ietlanych znak體
-	push dword PTR OFFSET znaki ; adres wy渨. obszaru
-	push dword PTR 1; numer urz筪zenia (ekran ma numer 1)
-	call __write ; wy渨ietlenie liczby na ekranie
-	add esp, 12 ; usuni阠ie parametr體 ze stosu
+	; wy艣wietlenie cyfr na ekranie
+	push dword PTR 12 ; liczba wy艣wietlanych znak贸w
+	push dword PTR OFFSET znaki ; adres wy艣w. obszaru
+	push dword PTR 1; numer urz膮dzenia (ekran ma numer 1)
+	call __write ; wy艣wietlenie liczby na ekranie
+	add esp, 12 ; usuni臋cie parametr贸w ze stosu
 
 	popa
 ret
@@ -47,12 +47,12 @@ triangle_num:
 	inc edi
 
 	mov esi, 10 ; indeks w tablicy 'znaki'
-	mov ebx, 10 ; dzielnik r體ny 10
+	mov ebx, 10 ; dzielnik r贸wny 10
 
 	mov edx, 0
 	konwersja:
 	;jesli jest 10,11,12... to dodaj do edx 10 zeby zrekompesnowac nadwyzeke, a potem odejmij od edx 
-		mov edx, 0 ; zerowanie starszej cz隃ci dzielnej
+		mov edx, 0 ; zerowanie starszej cz臋艣ci dzielnej
 		div ebx ; dzielenie przez 10, reszta w EDX, iloraz w EAX
 
 		add dl, 30H ; zamiana reszty z dzielenia na kod ASCII
@@ -63,8 +63,8 @@ triangle_num:
 	jne konwersja ; skok, gdy iloraz niezerowy
 
 
-	; wype硁ienie pozosta硑ch bajt體 spacjami i wpisanie
-	; znak體 nowego wiersza
+	; wype艂nienie pozosta艂ych bajt贸w spacjami i wpisanie
+	; znak贸w nowego wiersza
 	wypeln:
 		or esi, esi
 		jz wyswietl ; skok, gdy ESI = 0
@@ -82,7 +82,7 @@ triangle_num:
 	add esp,4
 
 	push 0
-	call _ExitProcess@4 ; zako馽zenie programu
+	call _ExitProcess@4 ; zako艅czenie programu
 
 _main ENDP
 
