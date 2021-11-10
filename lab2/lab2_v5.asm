@@ -1,4 +1,4 @@
-; Przyk≥ad wywo≥ywania funkcji MessageBoxA i MessageBoxW
+; Przyk≈Çad wywo≈Çywania funkcji MessageBoxA i MessageBoxW
 .686
 .model flat
 extern _ExitProcess@4 : PROC
