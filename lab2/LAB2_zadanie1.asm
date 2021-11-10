@@ -1,4 +1,4 @@
-; Przyk³ad wywo³ywania funkcji MessageBoxA i MessageBoxW 
+; PrzykÂ³ad wywoÂ³ywania funkcji MessageBoxA i MessageBoxW 
 .686 
 .model flat 
 extern _ExitProcess@4 : PROC 
@@ -36,9 +36,9 @@ conversion from Unicode to utf-16:
 _main PROC 
 
 push 0 ; stala MB_OK 
-; adres obszaru zawieraj¹cego tytu³ 
+; adres obszaru zawierajÂ¹cego tytuÂ³ 
 push OFFSET tytul
-; adres obszaru zawieraj¹cego tekst 
+; adres obszaru zawierajÂ¹cego tekst 
 push OFFSET tekst
 push 0 ; NULL 
 call _MessageBoxW@16 
