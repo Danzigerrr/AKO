@@ -12,21 +12,31 @@ public _main
 
 .code
 
-wyswietl_eax:
+wyswietl_eax proc
 	pusha
 
+	mov byte PTR znaki [0], 0AH ; kod nowego wiersza
+	mov byte PTR znaki [11], 0AH ; kod nowego wiersza
 
-
+	; wyœwietlenie cyfr na ekranie
+	push dword PTR 12 ; liczba wyœwietlanych znaków
+	push dword PTR OFFSET znaki ; adres wyœw. obszaru
+	push dword PTR 1; numer urz¹dzenia (ekran ma numer 1)
+	call __write ; wyœwietlenie liczby na ekranie
+	add esp, 12 ; usuniêcie parametrów ze stosu
 
 	popa
 ret
-
+wyswietl_eax endp
 
 
 
 _main PROC
 	mov eax,1 ;number actual
 	mov edi,0 ;positon
+
+	call wyswietl_eax
+
 	;mov ecx,50 ;repetitions of loop 
 	push eax
 triangle_num:
@@ -45,10 +55,8 @@ triangle_num:
 		mov edx, 0 ; zerowanie starszej czêœci dzielnej
 		div ebx ; dzielenie przez 10, reszta w EDX, iloraz w EAX
 
-		
 		add dl, 30H ; zamiana reszty z dzielenia na kod ASCII
 		mov znaki [esi], dl; zapisanie cyfry w kodzie ASCII
-
 		
 		dec esi ; zmniejszenie indeksu
 	cmp eax, 0 ; sprawdzenie czy iloraz = 0
@@ -65,16 +73,9 @@ triangle_num:
 	jmp wypeln
 
 	wyswietl:
-	mov byte PTR znaki [0], 0AH ; kod nowego wiersza
-	mov byte PTR znaki [11], 0AH ; kod nowego wiersza
-
-	; wyœwietlenie cyfr na ekranie
-	push dword PTR 12 ; liczba wyœwietlanych znaków
-	push dword PTR OFFSET znaki ; adres wyœw. obszaru
-	push dword PTR 1; numer urz¹dzenia (ekran ma numer 1)
-	call __write ; wyœwietlenie liczby na ekranie
-	add esp, 12 ; usuniêcie parametrów ze stosu
-
+	call wyswietl_eax
+	
+	;next loop run
 	cmp edi, 50h
 	jne triangle_num
 
