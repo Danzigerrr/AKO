@@ -7,8 +7,8 @@
 .686
 .model flat
 extern _ExitProcess@4 : PROC
-extern __write : PROC ; (dwa znaki podkreúlenia)
-extern __read : PROC ; (dwa znaki podkreúlenia)
+extern __write : PROC ; (dwa znaki podkre≈ìlenia)
+extern __read : PROC ; (dwa znaki podkre≈ìlenia)
 
 public _main
 .data
@@ -55,6 +55,6 @@ _main PROC
 
 
 	push 0
-	call _ExitProcess@4 ; zakoÒczenie programu
+	call _ExitProcess@4 ; zako√±czenie programu
 _main ENDP
 END
