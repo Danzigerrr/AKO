@@ -1,4 +1,4 @@
-; Przyk≥ad wywo≥ywania funkcji MessageBoxA i MessageBoxW 
+; Przyk≈Çad wywo≈Çywania funkcji MessageBoxA i MessageBoxW 
 .686 
 .model flat 
 extern _ExitProcess@4 : PROC 
@@ -20,17 +20,17 @@ tekst_Win1250	db 'Ka', 191
 
 .code 
 _main PROC 
-push 0 ; sta≥a MB_OK 
-; adres obszaru zawierajπcego tytu≥ 
+push 0 ; sta≈Ça MB_OK 
+; adres obszaru zawieraj≈°cego tytu≈Ç 
 push OFFSET tytul_Win1250 
-; adres obszaru zawierajπcego tekst 
+; adres obszaru zawieraj≈°cego tekst 
 push OFFSET tekst_Win1250 
 push 0 ; NULL 
 call _MessageBoxA@16 
 push 0 ; stala MB_OK 
-; adres obszaru zawierajπcego tytu≥ 
+; adres obszaru zawieraj≈°cego tytu≈Ç 
 push OFFSET tytul_Unicode 
-; adres obszaru zawierajπcego tekst 
+; adres obszaru zawieraj≈°cego tekst 
 push OFFSET tekst_Unicode 
 push 0 ; NULL 
 call _MessageBoxW@16 
