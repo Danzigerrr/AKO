@@ -1,17 +1,17 @@
 ;this is the solution for the fifth exercise
 ;conversion from Latin2 into Windows 1250
 ;first check big letter, then check small letter
-;work only for: '¥','¹','Æ','æ','Ê','ê'
+;work only for: 'Ä„','Ä…','Ä†','Ä‡','Ä˜','Ä™'
 
 .686
 .model flat
 extern _ExitProcess@4 : PROC
-extern __write : PROC ; (dwa znaki podkreœlenia)
-extern __read : PROC ; (dwa znaki podkreœlenia)
+extern __write : PROC ; (dwa znaki podkreÅ›lenia)
+extern __read : PROC ; (dwa znaki podkreÅ›lenia)
 extern _MessageBoxA@16 : PROC
 public _main
 .data
-	tekst_pocz db 10, 'Proszê napisaæ jakiœ tekst '
+	tekst_pocz db 10, 'ProszÄ™ napisaÄ‡ jakiÅ› tekst '
 	db 'i nacisnac Enter', 10
 	koniec_t db ?
 	magazyn db 80 dup (?)
@@ -23,30 +23,30 @@ public _main
 .code
 
 _main PROC
-	; liczba znaków tekstu informacyjnego
+	; liczba znakÃ³w tekstu informacyjnego
 	mov ecx,(OFFSET koniec_t) - (OFFSET tekst_pocz)
 	push ecx
 	push OFFSET tekst_pocz ; adres tekstu
-	push 1 ; nr urz¹dzenia (tu: ekran - nr 1)
-	call __write ; wyœwietlenie tekstu pocz¹tkowego
-	add esp, 12 ; usuniecie parametrów ze stosu
+	push 1 ; nr urzÄ…dzenia (tu: ekran - nr 1)
+	call __write ; wyÅ›wietlenie tekstu poczÄ…tkowego
+	add esp, 12 ; usuniecie parametrÃ³w ze stosu
 
 	; czytanie wiersza z klawiatury
-	push 80 ; maksymalna liczba znaków
+	push 80 ; maksymalna liczba znakÃ³w
 	push OFFSET magazyn
-	push 0 ; nr urz¹dzenia (tu: klawiatura - nr 0)
-	call __read ; czytanie znaków z klawiatury
-	add esp, 12 ; usuniecie parametrów ze stosu
+	push 0 ; nr urzÄ…dzenia (tu: klawiatura - nr 0)
+	call __read ; czytanie znakÃ³w z klawiatury
+	add esp, 12 ; usuniecie parametrÃ³w ze stosu
 
-	; kody ASCII napisanego tekstu zosta³y wprowadzone do obszaru 'magazyn'
+	; kody ASCII napisanego tekstu zostaÅ‚y wprowadzone do obszaru 'magazyn'
 	
-	; funkcja read wpisuje do rejestru EAX liczbê wprowadzonych znaków
+	; funkcja read wpisuje do rejestru EAX liczbÄ™ wprowadzonych znakÃ³w
 	mov liczba_znakow, eax
 
 
-	; rejestr ECX pe³ni rolê licznika obiegów pêtli
+	; rejestr ECX peÅ‚ni rolÄ™ licznika obiegÃ³w pÄ™tli
 	mov ecx, eax
-	mov ebx, 0 ; indeks pocz¹tkowy
+	mov ebx, 0 ; indeks poczÄ…tkowy
 
 
 	ptl: mov dl, magazyn[ebx] ; pobranie kolejnego znaku
@@ -59,48 +59,48 @@ _main PROC
 	sub dl, 20H ; change to uppercase
 	jmp dalej
 
-	checkA1:;'¥' 
-	cmp dl, 0a4h ;check if it is '¥' in latin 2
+	checkA1:;'Ä„' 
+	cmp dl, 0a4h ;check if it is 'Ä„' in latin 2
 	jne checkA2
-	mov dl, 165 ;convert into '¥' in Windows 1250
+	mov dl, 165 ;convert into 'Ä„' in Windows 1250
 	jmp dalej
 
 	checkA2:
-	cmp dl, 0a5h ;'¹'
+	cmp dl, 0a5h ;'Ä…'
 	jne checkC1
 	mov dl, 185
 	jmp dalej
 
 	checkC1:
-	cmp dl, 8fH ;'Æ'
+	cmp dl, 8fH ;'Ä†'
 	jne checkC2
 	mov dl, 198
 	jmp dalej
 
 	checkC2:
-	cmp dl, 86H ;'æ'
+	cmp dl, 86H ;'Ä‡'
 	jne checkE1
 	mov dl, 230
 	jmp dalej
 
 	checkE1:
-	cmp dl, 168 ;'Ê'
+	cmp dl, 168 ;'Ä˜'
 	jne checkE2
 	mov dl, 202
 	jmp dalej
 
 	checkE2:
-	cmp dl, 169 ;'ê'
+	cmp dl, 169 ;'Ä™'
 	jne dalej
 	mov dl, 234
 	jmp dalej
 
 
 	dalej:
-	mov magazyn[ebx], dl ; odes³anie znaku do pamiêci
+	mov magazyn[ebx], dl ; odesÅ‚anie znaku do pamiÄ™ci
 	inc ebx ; inkrementacja indeksu
 
-	; sterowanie pêtl¹
+	; sterowanie pÄ™tlÄ…
 	;loop ptl
 	dec ecx;
 	jnz ptl
@@ -113,6 +113,6 @@ _main PROC
 	call _MessageBoxA@16
 
 	push 0
-	call _ExitProcess@4 ; zakoñczenie programu
+	call _ExitProcess@4 ; zakoÅ„czenie programu
 _main ENDP
 END
