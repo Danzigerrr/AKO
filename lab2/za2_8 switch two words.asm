@@ -1,13 +1,13 @@
 ;this is the solution for the fifth exercise
 ;conversion from Latin2 into Windows 1250
 ;first check big letter, then check small letter
-;work only for: '¥','¹','Æ','æ','Ê','ê'
+;work only for: 'Â¥','Â¹','Ã†','Ã¦','ÃŠ','Ãª'
 
 .686
 .model flat
 extern _ExitProcess@4 : PROC
-extern __write : PROC ; (dwa znaki podkreœlenia)
-extern __read : PROC ; (dwa znaki podkreœlenia)
+extern __write : PROC ; (dwa znaki podkreÅ“lenia)
+extern __read : PROC ; (dwa znaki podkreÅ“lenia)
 extern _MessageBoxA@16 : PROC
 extern _MessageBoxW@16 : PROC
 public _main
@@ -27,28 +27,28 @@ public _main
 .code
 
 _main PROC
-	; liczba znaków tekstu informacyjnego
+	; liczba znakÃ³w tekstu informacyjnego
 	mov ecx,(OFFSET koniec_t) - (OFFSET tekst_pocz)
 	push ecx
 	push OFFSET tekst_pocz ; adres tekstu
-	push 1 ; nr urz¹dzenia (tu: ekran - nr 1)
-	call __write ; wyœwietlenie tekstu pocz¹tkowego
-	add esp, 12 ; usuniecie parametrów ze stosu
+	push 1 ; nr urzÂ¹dzenia (tu: ekran - nr 1)
+	call __write ; wyÅ“wietlenie tekstu poczÂ¹tkowego
+	add esp, 12 ; usuniecie parametrÃ³w ze stosu
 
 	; czytanie wiersza z klawiatury
-	push 80 ; maksymalna liczba znaków
+	push 80 ; maksymalna liczba znakÃ³w
 	push OFFSET magazyn
-	push 0 ; nr urz¹dzenia (tu: klawiatura - nr 0)
-	call __read ; czytanie znaków z klawiatury
-	add esp, 12 ; usuniecie parametrów ze stosu
+	push 0 ; nr urzÂ¹dzenia (tu: klawiatura - nr 0)
+	call __read ; czytanie znakÃ³w z klawiatury
+	add esp, 12 ; usuniecie parametrÃ³w ze stosu
 	
-	; funkcja read wpisuje do rejestru EAX liczbê wprowadzonych znaków
+	; funkcja read wpisuje do rejestru EAX liczbÃª wprowadzonych znakÃ³w
 	mov liczba_znakow, eax
 
-	; rejestr ECX pe³ni rolê licznika obiegów pêtli
+	; rejestr ECX peÂ³ni rolÃª licznika obiegÃ³w pÃªtli
 	mov ecx, eax
-	mov ebx, 0 ; magazyn indeks pocz¹tkowy
-	mov esi, 0 ; magazyn2 indeks pocz¹tkowy
+	mov ebx, 0 ; magazyn indeks poczÂ¹tkowy
+	mov esi, 0 ; magazyn2 indeks poczÂ¹tkowy
 
 	ptl1: mov dl, magazyn[ebx] ; pobranie kolejnego znaku
 
@@ -58,7 +58,7 @@ _main PROC
 
 	inc ebx ; inkrementacja indeksu
 
-	; sterowanie pêtl¹
+	; sterowanie pÃªtlÂ¹
 	dec ecx;
 	jnz ptl1
 
@@ -74,7 +74,7 @@ _main PROC
 
 	inc ebx ; magazyn inkrementacja indeks
 	inc esi ; magazyn2 inkrementacja indeks
-	; sterowanie pêtl¹
+	; sterowanie pÃªtlÂ¹
 	dec ecx;
 	jnz ptl2
 
@@ -96,7 +96,7 @@ _main PROC
 
 	inc ebx ; magazyn inkrementacja indeks
 	inc esi ; magazyn2 inkrementacja indeks
-	; sterowanie pêtl¹
+	; sterowanie pÃªtlÂ¹
 	dec ecx;
 	jnz ptl3
 
@@ -109,9 +109,9 @@ _main PROC
 	mov ecx,(OFFSET koniec_magazyn2) - (OFFSET magazyn2)
 	push ecx
 	push OFFSET magazyn2 ; adres tekstu
-	push 1 ; nr urz¹dzenia (tu: ekran - nr 1)
-	call __write ; wyœwietlenie tekstu pocz¹tkowego
-	add esp, 12 ; usuniecie parametrów ze stosu
+	push 1 ; nr urzÂ¹dzenia (tu: ekran - nr 1)
+	call __write ; wyÅ“wietlenie tekstu poczÂ¹tkowego
+	add esp, 12 ; usuniecie parametrÃ³w ze stosu
 
 		
 	;utf 8 
@@ -123,6 +123,6 @@ _main PROC
 
 
 	push 0
-	call _ExitProcess@4 ; zakoñczenie programu
+	call _ExitProcess@4 ; zakoÃ±czenie programu
 _main ENDP
 END
