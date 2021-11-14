@@ -7,8 +7,8 @@
 .686
 .model flat
 extern _ExitProcess@4 : PROC
-extern __write : PROC ; (dwa znaki podkreœlenia)
-extern __read : PROC ; (dwa znaki podkreœlenia)
+extern __write : PROC ; (dwa znaki podkreÅ“lenia)
+extern __read : PROC ; (dwa znaki podkreÅ“lenia)
 extern _MessageBoxA@16 : PROC
 extern _MessageBoxW@16 : PROC
 public _main
@@ -26,13 +26,13 @@ public _main
 
 _main PROC
 	; czytanie wiersza z klawiatury
-	push 80 ; maksymalna liczba znaków
+	push 80 ; maksymalna liczba znakÃ³w
 	push OFFSET magazyn_source
-	push 0 ; nr urz¹dzenia (tu: klawiatura - nr 0)
-	call __read ; czytanie znaków z klawiatury
-	add esp, 12 ; usuniecie parametrów ze stosu
+	push 0 ; nr urzÂ¹dzenia (tu: klawiatura - nr 0)
+	call __read ; czytanie znakÃ³w z klawiatury
+	add esp, 12 ; usuniecie parametrÃ³w ze stosu
 
-	; funkcja read wpisuje do rejestru EAX liczbê wprowadzonych znaków
+	; funkcja read wpisuje do rejestru EAX liczbÃª wprowadzonych znakÃ³w
 	mov liczba_znakow, eax
 	sub liczba_znakow, 2
 	mov esi, liczba_znakow ;od 0 do indeksu ostantniego znaku w tablicy wpisanej
@@ -50,10 +50,10 @@ _main PROC
 	dec esi
 	jnz calc_spaces
 
-	add liczba_spacji, 1; dodaj jedn¹ spacje
+	add liczba_spacji, 1; dodaj jednÂ¹ spacje
 
 	mov esi, liczba_znakow ; prawa bariera
-	mov edi, 0 ; magazyn_dest indeks pocz¹tkowy
+	mov edi, 0 ; magazyn_dest indeks poczÂ¹tkowy
 	mov ecx, 0 ; dlugosc slowa
 
 	take_next_word: ;powtorz tyle razy ile jest spacji
@@ -65,7 +65,7 @@ _main PROC
 		cmp dl, 20h
 		je found_space
 
-		; sterowanie pêtl¹
+		; sterowanie pÃªtlÂ¹
 		inc ecx ;dlugosc slowa
 		dec esi ; dekrementacja indeksu
 		cmp esi, 0FFFFFFFFH
@@ -89,7 +89,7 @@ _main PROC
 		inc edi ; magazyn_dest inkrementacja indeks
 		inc ebx;
 
-		; sterowanie pêtl¹
+		; sterowanie pÃªtlÂ¹
 		cmp ecx, 0
 		ja save_word	
 
@@ -102,12 +102,12 @@ _main PROC
 	mov ecx,(OFFSET koniec_magazyn_dest) - (OFFSET magazyn_dest) 
 	push ecx
 	push OFFSET magazyn_dest + 1 ;+ 1 bo omijamy pierwsza zbedna spacje (adres tekstu)
-	push 1 ; nr urz¹dzenia (tu: ekran - nr 1)
-	call __write ; wyœwietlenie tekstu pocz¹tkowego
-	add esp, 12 ; usuniecie parametrów ze stosu
+	push 1 ; nr urzÂ¹dzenia (tu: ekran - nr 1)
+	call __write ; wyÅ“wietlenie tekstu poczÂ¹tkowego
+	add esp, 12 ; usuniecie parametrÃ³w ze stosu
 
 	push 0
-	call _ExitProcess@4 ; zakoñczenie programu
+	call _ExitProcess@4 ; zakoÃ±czenie programu
 
 
 	last_word:
