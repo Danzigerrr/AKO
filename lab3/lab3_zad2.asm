@@ -1,11 +1,11 @@
-;Konwersja dziesiÍtnoñdwÛjkowa -> wczytaj liczbÍ z klawiatury
+;Konwersja dziesiƒôtno‚Äìdw√≥jkowa -> wczytaj liczbƒô z klawiatury
 ;DEC to BIN conversion -> read number from the keyboard
 
 .686
 .model flat
 extern _ExitProcess@4 : PROC
-extern __write : PROC ; (dwa znaki podkreúlenia)
-extern __read : PROC ; (dwa znaki podkreúlenia)
+extern __write : PROC ; (dwa znaki podkre≈õlenia)
+extern __read : PROC ; (dwa znaki podkre≈õlenia)
 public _main
 .data
 
@@ -58,7 +58,7 @@ wczytaj_do_eax proc
 		sub cl,30h
 		movzx ecx,cl ;zapisz cyfre (juz nie ASCII) w ECX
 
-		mul dword ptr dziesiec ;pomnÛø aktualnie eax
+		mul dword ptr dziesiec ;pomn√≥≈º aktualnie eax
 		add eax, ecx ; dodaj liczbe jednosci
 	jmp pobieraj_znaki
 
