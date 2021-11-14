@@ -20,7 +20,7 @@ wczytaj_do_EAX PROC
 	; Zapamietanie rejestrow ogolnego przeznaczenia, ale bez:
 	; - EAX: zepsuloby to wynik dzialania podprogramu
 	; - EBP: bo go nie modyfikujemy
-	; - ESP: bo nie mo¿emy go ruszaæ w podprogramie, nigdy
+	; - ESP: bo nie moÅ¼emy go ruszaÄ‡ w podprogramie, nigdy
 	push ebx
 	push ecx
 	push edx
@@ -33,8 +33,8 @@ wczytaj_do_EAX PROC
 	call __read
 	add  esp, 12
 
-	; zamiana cyfr w kodzie ASCII na liczbê binarn¹ 
-	mov esi, 0 ; bie¿¹ca wartoœæ przekszta³canej liczby przechowywana jest w rejestrze ESI - przyjmujemy 0 jako wartoœæ pocz¹tkow¹ 
+	; zamiana cyfr w kodzie ASCII na liczbÄ™ binarnÄ… 
+	mov esi, 0 ; bieÅ¼Ä…ca wartoÅ›Ä‡ przeksztaÅ‚canej liczby przechowywana jest w rejestrze ESI - przyjmujemy 0 jako wartoÅ›Ä‡ poczÄ…tkowÄ… 
 	mov ebx, offset znaki ; adres obszaru ze znakami 
 
 nowy: 
@@ -42,12 +42,12 @@ nowy:
 	inc   ebx       ; ebx++
 	cmp   al, 10    ; Enter?
 	je    finish    ; Tak, koniec...
-	sub   al, 30H   ; ASCII -> wartoœæ cyfry 
+	sub   al, 30H   ; ASCII -> wartoÅ›Ä‡ cyfry 
 	movzx edi, al   ; Zapisujemy do EDI 
 	mov   eax, 10
 	mul   esi       ; EDI * 10 
 	add   eax, edi  ; dodanie ostatnio odczytanej cyfry
-	mov   esi, eax  ; dotychczas obliczona wartoœæ
+	mov   esi, eax  ; dotychczas obliczona wartoÅ›Ä‡
 	jmp   nowy      ; jedziemy dalej...
  
 finish:
@@ -64,37 +64,37 @@ finish:
 wczytaj_do_EAX ENDP
 
 wyswietl_EAX_hex PROC 
-	; wyœwietlanie zawartoœci rejestru EAX w postaci liczby szesnastkowej 
-	pusha ; przechowanie rejestrów 
+	; wyÅ›wietlanie zawartoÅ›ci rejestru EAX w postaci liczby szesnastkowej 
+	pusha ; przechowanie rejestrÃ³w 
 
-	; rezerwacja 12 bajtów na stosie przeznaczonych
-	;na tymczasowe przechowanie cyfr szesnastkowych wyœwietlanej liczby 
+	; rezerwacja 12 bajtÃ³w na stosie przeznaczonych
+	;na tymczasowe przechowanie cyfr szesnastkowych wyÅ›wietlanej liczby 
 	sub esp, 12 
-	mov edi, esp ; adres zarezerwowanego obszaru pamiêci
+	mov edi, esp ; adres zarezerwowanego obszaru pamiÄ™ci
 	
 	; przygotowanie konwersji 
-	mov ecx, 8 ; liczba obiegów pêtli konwersji 
-	mov esi, 1 ; indeks pocz¹tkowy u¿ywany przy zapisie cyfr 
+	mov ecx, 8 ; liczba obiegÃ³w pÄ™tli konwersji 
+	mov esi, 1 ; indeks poczÄ…tkowy uÅ¼ywany przy zapisie cyfr 
 	
-	; pêtla konwersji 
+	; pÄ™tla konwersji 
 	ptl3hex:
-		; przesuniêcie cykliczne (obrót) rejestru EAX o 4 bity w lewo 
-		; w szczególnoœci, w pierwszym obiegu pêtli bity nr 31 - 28 
-		; rejestru EAX zostan¹ przesuniête na pozycje 3 - 0 
+		; przesuniÄ™cie cykliczne (obrÃ³t) rejestru EAX o 4 bity w lewo 
+		; w szczegÃ³lnoÅ›ci, w pierwszym obiegu pÄ™tli bity nr 31 - 28 
+		; rejestru EAX zostanÄ… przesuniÄ™te na pozycje 3 - 0 
 		rol eax, 4 
 
-		; wyodrêbnienie 4 najm³odszych bitów i odczytanie z tablicy 
-		; 'dekoder' odpowiadaj¹cej im cyfry w zapisie szesnastkowym 
+		; wyodrÄ™bnienie 4 najmÅ‚odszych bitÃ³w i odczytanie z tablicy 
+		; 'dekoder' odpowiadajÄ…cej im cyfry w zapisie szesnastkowym 
 		mov ebx, eax ; kopiowanie EAX do EBX 
-		and ebx, 0000000FH ; zerowanie bitów 31 - 4 rej.EBX 
+		and ebx, 0000000FH ; zerowanie bitÃ³w 31 - 4 rej.EBX 
 		mov dl, dekoder[ebx] ; pobranie cyfry z tablicy 
 
 		dalej:
-		; przes³anie cyfry do obszaru roboczego 
+		; przesÅ‚anie cyfry do obszaru roboczego 
 		mov [edi][esi], dl 
 
 		inc esi ;inkrementacja modyfikatora 
-	loop ptl3hex ; sterowanie pêtl¹ 
+	loop ptl3hex ; sterowanie pÄ™tlÄ… 
 
 	mov al, 30h ;30h -> zero
 	mov dl, 20h ;20h -> spacja
@@ -114,19 +114,19 @@ wyswietl_EAX_hex PROC
 	mov byte PTR [edi][0], 10 
 	mov byte PTR [edi][9], 10
 
-	; wyœwietlenie przygotowanych cyfr 
+	; wyÅ›wietlenie przygotowanych cyfr 
 	push 10 ; 8 cyfr + 2 znaki nowego wiersza 
 	push edi ; adres obszaru roboczego 
-	push 1 ; nr urz¹dzenia (tu: ekran) 
-	call __write ; wyœwietlenie 
+	push 1 ; nr urzÄ…dzenia (tu: ekran) 
+	call __write ; wyÅ›wietlenie 
 
-	; usuniêcie ze stosu 24 bajtów, w tym 12 bajtów zapisanych 
+	; usuniÄ™cie ze stosu 24 bajtÃ³w, w tym 12 bajtÃ³w zapisanych 
 	; przez 3 rozkazy push przed rozkazem call 
-	; i 12 bajtów zarezerwowanych na pocz¹tku podprogramu 
+	; i 12 bajtÃ³w zarezerwowanych na poczÄ…tku podprogramu 
 	add esp, 24 
 
-	popa ; odtworzenie rejestrów
-	ret ; powrót z podprogramu 
+	popa ; odtworzenie rejestrÃ³w
+	ret ; powrÃ³t z podprogramu 
 
 
 wyswietl_EAX_hex ENDP
