@@ -1,6 +1,6 @@
 comment |
-2. Opracowaæ now¹ wersjê podprogramu wczytuj¹cego liczbê dziesi¹tna, który wczyta liczbê ze znakiem i zachowa j¹ w rejestrze EAX w kodzie 
-U2 Podprogram nazwaæ wczytaj_EAX_U2_ Przyk³ad dzia³ania: 
+2. OpracowaÄ‡ nowÄ… wersjÄ™ podprogramu wczytujÄ…cego liczbÄ™ dziesiÄ…tna, ktÃ³ry wczyta liczbÄ™ ze znakiem i zachowa jÄ… w rejestrze EAX w kodzie 
+U2 Podprogram nazwaÄ‡ wczytaj_EAX_U2_ PrzykÅ‚ad dziaÅ‚ania: 
 
 konsola: 15 enter
 Wypisze-> stan EAX: OOOOOOOFh 
@@ -11,54 +11,54 @@ Wypisze -> stan EAX: 00000001h
 konsola: -1 enter
 Wypisze -> stan EAX: FFFFFFFFh 
 
-Dzia³anie obu podprogramów na raz mo¿na sprawdziæ np. tak: 
+DziaÅ‚anie obu podprogramÃ³w na raz moÅ¼na sprawdziÄ‡ np. tak: 
 Call wczytaj_eax_u2 ; wpisujemy 5 enter
 sub eax, 10 
-call wyswietl_EAX U2 ; w konsoli wyœwietla siê -5 
+call wyswietl_EAX U2 ; w konsoli wyÅ›wietla siÄ™ -5 
 
 |
 
 .686
 .model flat
 	extern _ExitProcess@4 : PROC
-	extern __write : PROC ; (dwa znaki podkreœlenia)
-	extern __read : PROC ; (dwa znaki podkreœlenia)
+	extern __write : PROC ; (dwa znaki podkreÅ›lenia)
+	extern __read : PROC ; (dwa znaki podkreÅ›lenia)
 	public _main
 ; obszar danych programu
 .data
 	; deklaracja tablicy 12 - bajtowej do przechowywania
 	; tworzonych cyfr
 	znaki db 12 dup(? )
-	dziesiec dd 10 ; mno¿nik
+	dziesiec dd 10 ; mnoÅ¼nik
 	                      
-; obszar instrukcji(rozkazów) programu
+; obszar instrukcji(rozkazÃ³w) programu
 .code	
 	wczytaj_EAX_U2 PROC
-		;Zapisanie wartoœci rejestrów
+		;Zapisanie wartoÅ›ci rejestrÃ³w
 		push EBX 
 		push ECX 
 		push EDX 
 		push ESI 
 
-		; max iloœæ znaków wczytywanej liczby
+		; max iloÅ›Ä‡ znakÃ³w wczytywanej liczby
 		push dword PTR 12
-		push dword PTR OFFSET znaki ; adres obszaru pamiêci
-		push dword PTR 0; numer urz¹dzenia (0 dla klawiatury)
-		call __read ; odczytywanie znaków z klawiatury
-		; (dwa znaki podkreœlenia przed read)
+		push dword PTR OFFSET znaki ; adres obszaru pamiÄ™ci
+		push dword PTR 0; numer urzÄ…dzenia (0 dla klawiatury)
+		call __read ; odczytywanie znakÃ³w z klawiatury
+		; (dwa znaki podkreÅ›lenia przed read)
 
-		add esp, 12 ; usuniêcie parametrów ze stosu
-		; bie¿¹ca wartoœæ przekszta³canej liczby przechowywana jest
-		; w rejestrze EAX; przyjmujemy 0 jako wartoœæ pocz¹tkow¹
+		add esp, 12 ; usuniÄ™cie parametrÃ³w ze stosu
+		; bieÅ¼Ä…ca wartoÅ›Ä‡ przeksztaÅ‚canej liczby przechowywana jest
+		; w rejestrze EAX; przyjmujemy 0 jako wartoÅ›Ä‡ poczÄ…tkowÄ…
 		mov eax, 0
 		mov ebx, OFFSET znaki ; adres obszaru ze znakami
 
 		;sprawdzanie czy pierszy znak to minus
 		mov cl, [ebx] ; pobranie kolejnej cyfry w kodzie
 			; ASCII
-		inc ebx ; zwiêkszenie indeksu
+		inc ebx ; zwiÄ™kszenie indeksu
 
-		mov esi, 0 ;u¿ywanie esi jako flaga czy liczba jest ujemna
+		mov esi, 0 ;uÅ¼ywanie esi jako flaga czy liczba jest ujemna
 		cmp cl, 43 ; czy plus
 			je pobieraj_znaki
 		cmp cl, 45 ; czy minus
@@ -69,18 +69,18 @@ call wyswietl_EAX U2 ; w konsoli wyœwietla siê -5
 		pobieraj_znaki:
 			mov cl, [ebx] ; pobranie kolejnej cyfry w kodzie
 			; ASCII
-			inc ebx ; zwiêkszenie indeksu
+			inc ebx ; zwiÄ™kszenie indeksu
 
 			to_liczba:
-			cmp cl,10 ; sprawdzenie czy naciœniêto Enter
-			je byl_enter ; skok, gdy naciœniêto Enter
-			sub cl, 30H ; zamiana kodu ASCII na wartoœæ cyfry
-			movzx ecx, cl ; przechowanie wartoœci cyfry w
+			cmp cl,10 ; sprawdzenie czy naciÅ›niÄ™to Enter
+			je byl_enter ; skok, gdy naciÅ›niÄ™to Enter
+			sub cl, 30H ; zamiana kodu ASCII na wartoÅ›Ä‡ cyfry
+			movzx ecx, cl ; przechowanie wartoÅ›ci cyfry w
 			; rejestrze ECX
-			; mno¿enie wczeœniej obliczonej wartoœci razy 10
+			; mnoÅ¼enie wczeÅ›niej obliczonej wartoÅ›ci razy 10
 			mul dword PTR dziesiec
 			add eax, ecx ; dodanie ostatnio odczytanej cyfry
-		jmp pobieraj_znaki ; skok na pocz¹tek pêtli
+		jmp pobieraj_znaki ; skok na poczÄ…tek pÄ™tli
 
 		byl_enter:
 		cmp esi, 1 ;sparwdzamy czy ujemna
@@ -88,7 +88,7 @@ call wyswietl_EAX U2 ; w konsoli wyœwietla siê -5
 		;inaczej
 			neg eax
 		przywroc:
-		;Przywróæ wartoœci rejestrów
+		;PrzywrÃ³Ä‡ wartoÅ›ci rejestrÃ³w
 		pop ESI 
 		pop EDX
 		pop ECX
@@ -108,9 +108,9 @@ call wyswietl_EAX U2 ; w konsoli wyœwietla siê -5
 			mov ecx, 0
 		dalej:
 		mov esi, 10; indeks w tablicy 'znaki'
-		mov ebx, 10; dzielnik równy 10
+		mov ebx, 10; dzielnik rÃ³wny 10
 		konwersja:
-			mov edx, 0; zerowanie starszej czêœci dzielnej
+			mov edx, 0; zerowanie starszej czÄ™Å›ci dzielnej
 			div ebx; dzielenie przez 10, reszta w EDX,
 			; iloraz w EAX
 			add dl, 30H; zamiana reszty z dzielenia na kod
@@ -119,9 +119,9 @@ call wyswietl_EAX U2 ; w konsoli wyœwietla siê -5
 			dec esi; zmniejszenie indeksu
 			cmp eax, 0; sprawdzenie czy iloraz = 0
 		jne konwersja; skok, gdy iloraz niezerowy
-			; wype³nienie pozosta³ych bajtów spacjami i wpisanie
-			; znaków nowego wiersza
-		cmp ecx, 1 ; je¿eli ujemna
+			; wypeÅ‚nienie pozostaÅ‚ych bajtÃ³w spacjami i wpisanie
+			; znakÃ³w nowego wiersza
+		cmp ecx, 1 ; jeÅ¼eli ujemna
 			je dodaj_minus
 		; jak nie to daj +
 			mov znaki[esi], 43
@@ -140,12 +140,12 @@ call wyswietl_EAX U2 ; w konsoli wyœwietla siê -5
 		wyswietl :
 			mov byte PTR znaki[0], 10; kod nowego wiersza
 			mov byte PTR znaki[11], 10; kod nowego wiersza
-			; wyœwietlenie cyfr na ekranie
-			push dword PTR 12; liczba wyœwietlanych znaków
-			push dword PTR OFFSET znaki; adres wyœw.obszaru
-			push dword PTR 1; numer urz¹dzenia(ekran ma numer 1)
-			call __write; wyœwietlenie liczby na ekranie
-			add esp, 12; usuniêcie parametrów ze stosu
+			; wyÅ›wietlenie cyfr na ekranie
+			push dword PTR 12; liczba wyÅ›wietlanych znakÃ³w
+			push dword PTR OFFSET znaki; adres wyÅ›w.obszaru
+			push dword PTR 1; numer urzÄ…dzenia(ekran ma numer 1)
+			call __write; wyÅ›wietlenie liczby na ekranie
+			add esp, 12; usuniÄ™cie parametrÃ³w ze stosu
 		popa
 		ret
 	wyswietl_EAX_U2 ENDP
