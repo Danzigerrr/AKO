@@ -1,3 +1,24 @@
+
+comment |
+
+1. Opracować nową wersję podprogramu dokonującego konwersji liczby binarnej zawartej w rejestrze EAX na postać dziesiętna przy założeniu, 
+że liczba w rejestrze EAX jest liczba ze znakiem (w kodzie U2). Podprogram nazwać U2 Bezpośrednio przed liczbą wyświetlaną w 
+konsoli ma się pojawić znak liczby dla liczb dodatnich, dla liczb ujemnych). Napisać także krótki program przykładowo,' ilustrujący sposób 
+podprogramu dla przypadków liczb dodatnich i ujemnych. 
+
+Fragment programu głównego testującego podprogram: 
+mov EAX, 15 
+callvwswietl_EAX _U2 ; ->wkonsoli powinno pojawić się:  +15
+
+movEAX,-15 
+callwyswietl_EAX_U2 ; ->wkonsoli powinno pojawić się: -15
+
+Wskazówka: jeśli liczba jest ujemna, to zmienić znak liczby (rozkaz NEG), zapamiętać znak, dalej postępować tak, jak dla liczby dodatniej, na końcu 
+wyświetlić zapamiętamy znak. 
+
+|
+
+
 .686
 .model flat
 extern __write : PROC
@@ -10,9 +31,9 @@ znaki db 12 dup (?)
 wyswietl_EAX PROC
 	pusha
 	mov esi, 10 ; indeks w tablicy 'znaki'
-	mov ebx, 10 ; dzielnik r�wny 10
+	mov ebx, 10 ; dzielnik równy 10
 	konwersja:
-	mov edx, 0 ; zerowanie starszej cz�ci dzielnej
+	mov edx, 0 ; zerowanie starszej części dzielnej
 	div ebx ; dzielenie przez 10, reszta w EDX, iloraz w EAX
 	add dl, 30H ; zamiana reszty z dzielenia na kod ASCII
 	mov znaki [esi], dl; zapisanie cyfry w kodzie ASCII
@@ -24,8 +45,8 @@ wyswietl_EAX PROC
 	cmp edi,1
 	jnz dodatnia
 	jz ujemna
-	; wype�nienie pozosta�ych bajt�w spacjami i wpisanie
-	; znak�w nowego wiersza
+	; wypełnienie pozostałych bajtów spacjami i wpisanie
+	; znaków nowego wiersza
 	wypeln:
 		or esi, esi
 		jz wyswietl ; skok, gdy ESI = 0
@@ -35,12 +56,12 @@ wyswietl_EAX PROC
 		wyswietl:
 		mov byte PTR znaki [0], 0AH ; kod nowego wiersza
 		mov byte PTR znaki [11], 0AH ; kod nowego wiersza
-		; wy�wietlenie cyfr na ekranie
-		push dword PTR 12 ; liczba wy�wietlanych znak�w
-		push dword PTR OFFSET znaki ; adres wy�w. obszaru
-		push dword PTR 1; numer urz�dzenia (ekran ma numer 1)
-		call __write ; wy�wietlenie liczby na ekranie
-		add esp, 12 ; usuni�cie parametr�w ze stosu
+		; wyświetlenie cyfr na ekranie
+		push dword PTR 12 ; liczba wyświetlanych znaków
+		push dword PTR OFFSET znaki ; adres wyśw. obszaru
+		push dword PTR 1; numer urządzenia (ekran ma numer 1)
+		call __write ; wyświetlenie liczby na ekranie
+		add esp, 12 ; usunięcie parametrów ze stosu
 	popa
 	ret
 
@@ -58,8 +79,8 @@ wyswietl_EAX ENDP
 
 _main PROC
 
-	; EAX - liczba do wy�wietlenia
-	; EBX - liczb�, kt�r� trzeba doda� aby otrzyma� element ci�gu
+	; EAX - liczba do wyświetlenia
+	; EBX - liczbą, którą trzeba dodać aby otrzymać element ciągu
 	; ECX - licznik liczb
 	mov eax, -15
 	mov ebx, 1
@@ -73,7 +94,7 @@ _main PROC
 	jnl nie_zmieniaj_bo_dodatnia
 		push eax ;zachowaj orginal
 
-		;oblicz liczbe przeciwn�
+		;oblicz liczbe przeciwną
 		not eax
 		add eax,1
 
