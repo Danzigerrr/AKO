@@ -20,7 +20,7 @@ _szukaj_max PROC
 	jge y_wieksza ;skok gdy  y >= z
 
 ; y < z
-;wiêc max = z
+;wiÄ™c max = z
 wpisz_z:
 	mov eax, [ebp+16] ; zapisz z
 
