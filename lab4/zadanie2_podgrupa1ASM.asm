@@ -31,7 +31,9 @@ suma PROC
 
 	mov rsi, 48
 	kolejny:
-		; +40 poniewaz: œlad zajmue 8 bajtow
+		; +48 poniewaz: 
+		; œlad zajmue 8 bajtow,
+		; prolog zajmuje 8 bajtow,
 		; i 32 bajty shadow space(u¿ywany przez
 		; wywo³an¹ funckjê)
 		add rax, [rbp + rsi] ;v5 
