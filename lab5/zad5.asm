@@ -1,5 +1,5 @@
 .686 
-.XMM  ; zezwolenie na asemblacj rozkazów grupy SSE 
+.XMM  ; zezwolenie na asemblacj rozkazÃ³w grupy SSE 
 .model flat 
  
 public _int_na_float
