@@ -31,7 +31,7 @@ int main()
 	}
 	printf("(Pozorne) bledy w obliczeniach wynikaja z wykonywania obliczen\
 		\nzgodnie z regula tzw. arytmetki nasycenia:\
-		\njeúli wynik przekroczy zakres (w tym wypadku liczby <-127,127>),\
+		\nje≈õli wynik przekroczy zakres (w tym wypadku liczby <-127,127>),\
 		\nwpisywana jest najwieksza/najmniejsza liczba, dopusczona w danym formacie\n");
 
 	return 0;
