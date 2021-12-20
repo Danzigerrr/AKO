@@ -1,5 +1,5 @@
 .686 
-.XMM ; zezwolenie na asemblacjê rozkazów grupy SSE 
+.XMM ; zezwolenie na asemblacjÄ™ rozkazÃ³w grupy SSE 
 .model flat 
 public _wyznacz_sumy_SSE
 .code 
@@ -19,7 +19,7 @@ movups xmm6, [edi]
 ; w rejestrach xmm5 i xmm6 
 paddsb xmm5, xmm6
 
-; zapisanie wyniku sumowania w tablicy w pamiêci 
+; zapisanie wyniku sumowania w tablicy w pamiÄ™ci 
 movups [ebx], xmm5 
 pop edi 
 pop esi 
