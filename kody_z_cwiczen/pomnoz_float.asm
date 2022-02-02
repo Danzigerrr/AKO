@@ -24,3 +24,7 @@ ret
 _pomnoz_float ENDP 
 
 END
+
+
+;konwenter liczb dec na float lub double:
+;https://www.exploringbinary.com/floating-point-converter/
