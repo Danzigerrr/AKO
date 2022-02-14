@@ -77,7 +77,7 @@ _sortowanie proc
 	pop ecx
 	jb for1
 		
-	;wynik przekazany jako liczba EDX:EAX
+	;wynik przekazany jako liczba EAX
 
 	mov eax, [ebx]
 
